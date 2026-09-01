@@ -7,9 +7,14 @@
 class HeartbeatMonitor : public rclcpp::Node
 {
     public:
+    
     HeartbeatMonitor(): Node("heartbeat_monitor")
     {
-        sub_=this->create_subscription<std_msgs::msg::String>("rover_topic",10,
+        this->declare_parameter<std::string>("topic_name","rover_topic");
+
+        std::string topic = this->get_parameter("topic_name").as_string();
+
+        sub_=this->create_subscription<std_msgs::msg::String>(topic,10,
         [this](const  std_msgs::msg::String::SharedPtr msg_ptr){call_back(msg_ptr);});
 
     }

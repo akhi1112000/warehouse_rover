@@ -15,7 +15,10 @@ find_package(std_msgs REQUIRED)
 add_executable(heart_node src/heartbeat_node.cpp)
 ament_target_dependencies(heart_node rclcpp std_msgs)
 
-install(TARGETS heart_node
+add_executable(monitor_node src/heartbeat_monitor.cpp)
+ament_target_dependencies(monitor_node rclcpp std_msgs)
+
+install(TARGETS heart_node monitor_node
   DESTINATION lib/${PROJECT_NAME})
 
 ament_package()

@@ -35,11 +35,21 @@ public:
 
 int main (int argc , char * argv[])
 {
+
     rclcpp::init(argc,argv);
 
     auto node = std::make_shared<heartbeat_node>();
 
-    rclcpp::spin(node);
+    try
+    {
+            rclcpp::spin(node);
+
+    }
+    catch(const std::exception& e)
+    {
+    RCLCPP_FATAL(rclcpp::get_logger("main"), "fatal: %s", e.what());
+    }
+    
     rclcpp::shutdown();
 
     return 0;

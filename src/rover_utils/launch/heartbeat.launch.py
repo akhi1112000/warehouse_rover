@@ -22,5 +22,17 @@ def generate_launch_description():
                             'topic_name': 'rover_topic'  
                         }]
 
+        ),
+
+         Node(
+                    package='rover_utils',
+                    executable='battery_node',
+                    name='rover_battery',
+                    parameters=[{
+                                    'topic_name': 'battery_status'  
+                                }]
+        
         )
+
+
     ])

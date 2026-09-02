@@ -21,4 +21,7 @@ ament_target_dependencies(monitor_node rclcpp std_msgs)
 install(TARGETS heart_node monitor_node
   DESTINATION lib/${PROJECT_NAME})
 
+install(DIRECTORY launch
+  DESTINATION share/${PROJECT_NAME})
+
 ament_package()

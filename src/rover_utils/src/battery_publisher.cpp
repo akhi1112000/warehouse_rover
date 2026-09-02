@@ -1,5 +1,6 @@
 #include "rclcpp/rclcpp.hpp"
 #include "rover_msgs/msg/battery_status.hpp"
+#include "rover_msgs/srv/reset_battery.hpp"
 
 class BatteryPublisher : public rclcpp::Node
 {
@@ -9,7 +10,7 @@ public:
     {
         this->declare_parameter<std::string>("topic_name","battery_status");
 
-        this->declare_parameter<int>("publish_rate_ms",100);
+        this->declare_parameter<int>("publish_rate_ms",500);
 
         this->declare_parameter<std::string>("message_prefix","the battery_statues");
 
@@ -26,9 +27,16 @@ public:
 
         time_= this->create_wall_timer(
             std::chrono::milliseconds(rate),[this](){publishBatteryStatus();});
+
+
+        reset_serv_=this->create_service<rover_msgs::srv::ResetBattery>("reset_battery",
+        [this](const rover_msgs::srv::ResetBattery::Request::SharedPtr req_,
+                     rover_msgs::srv::ResetBattery::Response::SharedPtr res_)
+                     {onReset(req_,res_);});
     }
 
 
+   
     private:
 
     void publishBatteryStatus()
@@ -58,11 +66,33 @@ public:
     pub_->publish(msg);
 }
 
+
+ void onReset(const rover_msgs::srv::ResetBattery::Request::SharedPtr request,
+                       rover_msgs::srv::ResetBattery::Response::SharedPtr response)
+    {
+          if(request->target_level<0 || request->target_level>100)
+          {
+            response->success=false;
+            RCLCPP_WARN(this->get_logger(), "invalid target: %.1f", request->target_level); 
+            response->message = "target_level must be between 0 and 100";
+            RCLCPP_INFO(this->get_logger(), "%s", response->message.c_str());         
+          }
+          else
+          {
+            response->success = true;
+            counter_ = request->target_level;
+            response->message = "target_level is between 0 and 100";
+            RCLCPP_INFO(this->get_logger(),"%s",response->message.c_str());
+          }
+    }
     double counter_ =100.00; 
     bool is_charging_ = false;
     rclcpp::Publisher<rover_msgs::msg::BatteryStatus>::SharedPtr pub_;
     rclcpp::TimerBase::SharedPtr time_;
     std::string prefix_;
+
+
+    rclcpp::Service<rover_msgs::srv::ResetBattery>::SharedPtr reset_serv_;
 
     
 };

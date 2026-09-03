@@ -10,7 +10,7 @@ public:
     {
         this->declare_parameter<std::string>("topic_name","battery_status");
 
-        this->declare_parameter<int>("publish_rate_ms",500);
+        this->declare_parameter<int>("publish_rate_ms",100);
 
         this->declare_parameter<std::string>("message_prefix","the battery_statues");
 

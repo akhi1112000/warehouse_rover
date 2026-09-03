@@ -25,7 +25,13 @@ ament_target_dependencies(battery_node rclcpp rover_msgs)
 add_executable(battery_monitor src/battery_monitor.cpp)
 ament_target_dependencies(battery_monitor rclcpp rover_msgs std_msgs)
 
-install(TARGETS heart_node monitor_node battery_node battery_monitor
+add_executable(battery_client src/battery_client.cpp)
+ament_target_dependencies(battery_client rclcpp rover_msgs std_msgs)
+
+add_executable(battery_manager src/battery_manager.cpp)
+ament_target_dependencies(battery_manager rclcpp rover_msgs std_msgs)
+
+install(TARGETS heart_node monitor_node battery_node battery_monitor battery_client battery_manager
   DESTINATION lib/${PROJECT_NAME})
 
 install(DIRECTORY launch

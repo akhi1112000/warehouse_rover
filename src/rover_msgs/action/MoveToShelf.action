@@ -1,0 +1,9 @@
+string shelf_num
+float64 speed
+---
+bool succeeded
+float64 dist
+string msg
+---
+float64 remain_dist
+float64 percent

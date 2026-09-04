@@ -12,6 +12,7 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(rover_msgs REQUIRED)
+find_package(rclcpp_action REQUIRED)
 
 add_executable(heart_node src/heartbeat_node.cpp)
 ament_target_dependencies(heart_node rclcpp std_msgs)
@@ -31,8 +32,17 @@ ament_target_dependencies(battery_client rclcpp rover_msgs std_msgs)
 add_executable(battery_manager src/battery_manager.cpp)
 ament_target_dependencies(battery_manager rclcpp rover_msgs std_msgs)
 
-install(TARGETS heart_node monitor_node battery_node battery_monitor battery_client battery_manager
+add_executable(action_server src/action_server.cpp)
+ament_target_dependencies(action_server rclcpp rover_msgs std_msgs rclcpp_action)
+
+
+install(TARGETS heart_node monitor_node 
+                battery_node battery_monitor 
+                battery_client battery_manager action_server
+                  
   DESTINATION lib/${PROJECT_NAME})
+
+
 
 install(DIRECTORY launch
   DESTINATION share/${PROJECT_NAME})

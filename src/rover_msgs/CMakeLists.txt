@@ -13,6 +13,8 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/BatteryStatus.msg"
   "srv/ResetBattery.srv"
   "srv/GetLastCommand.srv"
+  "action/MoveToShelf.action"
+  
 
 )
 

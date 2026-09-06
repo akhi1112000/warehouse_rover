@@ -2,12 +2,17 @@
 #include "rover_msgs/msg/battery_status.hpp"
 #include "rover_msgs/srv/reset_battery.hpp"
 
+#include "rclcpp/qos.hpp"
+
 class BatteryPublisher : public rclcpp::Node
 {
    
 public:
     BatteryPublisher() : Node("rover_battery")
     {
+        rclcpp::QoS qos(10);
+        qos.reliable();
+        qos.transient_local();
         this->declare_parameter<std::string>("topic_name","battery_status");
 
         this->declare_parameter<int>("publish_rate_ms",100);
@@ -23,7 +28,7 @@ public:
 
         prefix_ = this->get_parameter("message_prefix").as_string();
 
-        pub_ = this->create_publisher<rover_msgs::msg::BatteryStatus>(topic,10);
+        pub_ = this->create_publisher<rover_msgs::msg::BatteryStatus>(topic,qos);
 
         time_= this->create_wall_timer(
             std::chrono::milliseconds(rate),[this](){publishBatteryStatus();});

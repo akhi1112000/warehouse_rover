@@ -43,14 +43,14 @@ pub_ = this->create_publisher<std_msgs::msg::String>("command_topic",10);
         {
              msg_pub.data = "EMERGENCY_STOP";
 
-           // RCLCPP_WARN(this->get_logger(),"EMERGENCY_STOP");
+            RCLCPP_WARN(this->get_logger(),"EMERGENCY_STOP");
         }
 
        else if(msg_sub->charge_percent <=low_threshold_ && ! msg_sub->is_charging)
         {
             msg_pub.data = "RETURN_TO_DOCK";
 
-            //RCLCPP_WARN(this->get_logger(),"RETURN_TO_DOCK");
+            RCLCPP_WARN(this->get_logger(),"RETURN_TO_DOCK");
         }
 
         
@@ -59,7 +59,7 @@ pub_ = this->create_publisher<std_msgs::msg::String>("command_topic",10);
         {
              msg_pub.data = "DOCK_RELEASE";
 
-           // RCLCPP_WARN(this->get_logger(),"DOCK_RELEASE");
+            RCLCPP_WARN(this->get_logger(),"DOCK_RELEASE");
         }
 
        

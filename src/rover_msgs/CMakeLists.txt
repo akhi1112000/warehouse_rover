@@ -14,6 +14,8 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "srv/ResetBattery.srv"
   "srv/GetLastCommand.srv"
   "action/MoveToShelf.action"
+  "action/DockToCharger.action"
+  "action/PickPackage.action"
   
 
 )

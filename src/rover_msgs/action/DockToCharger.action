@@ -1,0 +1,7 @@
+string charge_station
+---
+bool succeeded
+string msg
+---
+float64 remain_dist
+float64 remian_angle

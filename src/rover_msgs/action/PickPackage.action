@@ -1,0 +1,9 @@
+float64 hight_m
+string pkg 
+---
+bool succedded
+float64 pkg_wieght
+string msg
+---
+string current_state
+float64 achievment_p

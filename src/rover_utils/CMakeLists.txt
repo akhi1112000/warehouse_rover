@@ -35,10 +35,19 @@ ament_target_dependencies(battery_manager rclcpp rover_msgs std_msgs)
 add_executable(action_server src/action_server.cpp)
 ament_target_dependencies(action_server rclcpp rover_msgs std_msgs rclcpp_action)
 
+add_executable(dock_action src/dock_action_server.cpp)
+ament_target_dependencies(dock_action rclcpp rover_msgs std_msgs rclcpp_action)
+
+add_executable(pickPkg_action src/PickPackage.cpp)
+ament_target_dependencies(pickPkg_action rclcpp rover_msgs std_msgs rclcpp_action)
+
+add_executable(pickPkg_client src/pick_client.cpp)
+ament_target_dependencies(pickPkg_client rclcpp rover_msgs std_msgs rclcpp_action)
 
 install(TARGETS heart_node monitor_node 
                 battery_node battery_monitor 
-                battery_client battery_manager action_server
+                battery_client battery_manager 
+                action_server dock_action pickPkg_action pickPkg_client
                   
   DESTINATION lib/${PROJECT_NAME})
 

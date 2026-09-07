@@ -14,6 +14,9 @@ find_package(std_msgs REQUIRED)
 find_package(rover_msgs REQUIRED)
 find_package(rclcpp_action REQUIRED)
 find_package(rclcpp_lifecycle REQUIRED)
+find_package(tf2_ros REQUIRED)
+find_package(tf2 REQUIRED)
+find_package(geometry_msgs REQUIRED)
 
 add_executable(heart_node src/heartbeat_node.cpp)
 ament_target_dependencies(heart_node rclcpp std_msgs)
@@ -47,10 +50,21 @@ ament_target_dependencies(pickPkg_client rclcpp rover_msgs std_msgs rclcpp_actio
 add_executable(lifecycle src/battery_lifecycle.cpp)
 ament_target_dependencies(lifecycle rclcpp rover_msgs std_msgs rclcpp_lifecycle)
 
+add_executable(tf2 src/tf_static_demo.cpp)
+ament_target_dependencies(tf2 rclcpp tf2_ros geometry_msgs tf2)
+
+add_executable(tf_listener src/tf_listener_demo.cpp)
+ament_target_dependencies(tf_listener rclcpp tf2_ros geometry_msgs tf2)
+
+
+add_executable(executor src/executor_demo.cpp)
+ament_target_dependencies(executor rclcpp tf2_ros geometry_msgs tf2)
+
 install(TARGETS heart_node monitor_node 
                 battery_node battery_monitor 
                 battery_client battery_manager 
-                action_server pickPkg_action pickPkg_client lifecycle
+                action_server pickPkg_action pickPkg_client lifecycle tf2 tf_listener
+                executor
                   
   DESTINATION lib/${PROJECT_NAME})
 

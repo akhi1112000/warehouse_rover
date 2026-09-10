@@ -18,11 +18,11 @@ find_package(tf2_ros REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(geometry_msgs REQUIRED)
 
-add_executable(heart_node src/heartbeat_node.cpp)
-ament_target_dependencies(heart_node rclcpp std_msgs)
+add_executable(heartbeat_node src/heartbeat_node.cpp)
+ament_target_dependencies(heartbeat_node rclcpp std_msgs)
 
-add_executable(monitor_node src/heartbeat_monitor.cpp)
-ament_target_dependencies(monitor_node rclcpp std_msgs)
+add_executable(heartbeat_monitor src/heartbeat_monitor.cpp)
+ament_target_dependencies(heartbeat_monitor rclcpp std_msgs)
 
 add_executable(battery_node src/battery_publisher.cpp)
 ament_target_dependencies(battery_node rclcpp rover_msgs)
@@ -36,8 +36,8 @@ ament_target_dependencies(battery_client rclcpp rover_msgs std_msgs)
 add_executable(battery_manager src/battery_manager.cpp)
 ament_target_dependencies(battery_manager rclcpp rover_msgs std_msgs)
 
-add_executable(action_server src/action_server.cpp)
-ament_target_dependencies(action_server rclcpp rover_msgs std_msgs rclcpp_action)
+add_executable(shelf_action_server src/action_server.cpp)
+ament_target_dependencies(shelf_action_server rclcpp rover_msgs std_msgs rclcpp_action)
 
 
 
@@ -47,24 +47,25 @@ ament_target_dependencies(pickPkg_action rclcpp rover_msgs std_msgs rclcpp_actio
 add_executable(pickPkg_client src/pick_client.cpp)
 ament_target_dependencies(pickPkg_client rclcpp rover_msgs std_msgs rclcpp_action)
 
-add_executable(lifecycle src/battery_lifecycle.cpp)
-ament_target_dependencies(lifecycle rclcpp rover_msgs std_msgs rclcpp_lifecycle)
+add_executable(battery_lifecycle src/battery_lifecycle.cpp)
+ament_target_dependencies(battery_lifecycle rclcpp rover_msgs std_msgs rclcpp_lifecycle)
 
-add_executable(tf2 src/tf_static_demo.cpp)
-ament_target_dependencies(tf2 rclcpp tf2_ros geometry_msgs tf2)
+add_executable(tf_static_demo src/tf_static_demo.cpp)
+ament_target_dependencies(tf_static_demo rclcpp tf2_ros geometry_msgs tf2)
 
-add_executable(tf_listener src/tf_listener_demo.cpp)
-ament_target_dependencies(tf_listener rclcpp tf2_ros geometry_msgs tf2)
+add_executable(tf_listener_demo src/tf_listener_demo.cpp)
+ament_target_dependencies(tf_listener_demo rclcpp tf2_ros geometry_msgs tf2)
 
 
-add_executable(executor src/executor_demo.cpp)
-ament_target_dependencies(executor rclcpp tf2_ros geometry_msgs tf2)
+add_executable(executor_demo src/executor_demo.cpp)
+ament_target_dependencies(executor_demo rclcpp)
 
-install(TARGETS heart_node monitor_node 
+install(TARGETS heartbeat_node heartbeat_monitor 
                 battery_node battery_monitor 
                 battery_client battery_manager 
-                action_server pickPkg_action pickPkg_client lifecycle tf2 tf_listener
-                executor
+                shelf_action_server pickPkg_action pickPkg_client battery_lifecycle 
+                tf_static_demo tf_listener_demo
+                executor_demo
                   
   DESTINATION lib/${PROJECT_NAME})
 
@@ -72,5 +73,12 @@ install(TARGETS heart_node monitor_node
 
 install(DIRECTORY launch
   DESTINATION share/${PROJECT_NAME})
+
+
+  if(BUILD_TESTING)
+  find_package(ament_cmake_gtest REQUIRED)
+  ament_add_gtest(test_battery_logic test/test_battery_logic.cpp)
+  target_include_directories(test_battery_logic PRIVATE include)
+endif()
 
 ament_package()

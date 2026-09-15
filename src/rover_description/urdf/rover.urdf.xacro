@@ -13,7 +13,7 @@
 
 
 
-<xacro:property name="caster_radius"  value="0.1" />
+<xacro:property name="caster_radius"  value="0.05" />
 
 
 <xacro:property name="body_mass" value="70"/>
@@ -75,7 +75,10 @@
     <xacro:sphere_inertia mass="${caster_mass}" r="${caster_radius}"/>
   </link>
 
-
+<gazebo reference="${prefix}">
+  <mu1>0.0</mu1>
+  <mu2>0.0</mu2>
+</gazebo>
 
   <joint name="${prefix}_joint" type="fixed">
     <parent link="base_link"/>
@@ -132,6 +135,10 @@
 
 
     <xacro:cylinder_inertia mass="${wheel_mass}" r="${wheel_radius}" h="${wheel_width}"/>
+    <gazebo reference="left_wheel">
+      <mu1>1.0</mu1>
+      <mu2>1.0</mu2>
+    </gazebo>
 </link>
 
 <joint name="left_wheel_joint" type="continuous">
@@ -162,6 +169,11 @@
 
 
     <xacro:cylinder_inertia mass="${wheel_mass}" r="${wheel_radius}" h="${wheel_width}"/>
+    <gazebo reference="left_wheel">
+      <mu1>1.0</mu1>
+      <mu2>1.0</mu2>
+    </gazebo>
+
 </link>
 
 <joint name="right_wheel_joint" type="continuous">
@@ -186,6 +198,21 @@
 <xacro:caster_wheel prefix="caster_rear_right">
   <origin xyz="-0.30 -0.2 ${caster_radius - (ground_clearance + body_height/2)}"/>
 </xacro:caster_wheel>
+
+
+<gazebo>
+  <plugin filename="gz-sim-diff-drive-system"
+          name="gz::sim::systems::DiffDrive">
+    <left_joint>left_wheel_joint</left_joint>
+    <right_joint>right_wheel_joint</right_joint>
+    <wheel_separation>${wheel_separation}</wheel_separation>
+    <wheel_radius>${wheel_radius}</wheel_radius>
+    <topic>cmd_vel</topic>
+    <odom_topic>odom</odom_topic>
+    <frame_id>odom</frame_id>
+    <child_frame_id>base_footprint</child_frame_id>
+  </plugin>
+</gazebo>
 
 
 </robot>

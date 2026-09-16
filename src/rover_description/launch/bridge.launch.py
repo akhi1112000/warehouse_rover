@@ -13,6 +13,7 @@ def generate_launch_description():
             '/model/warehouse_rover/tf@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V',
             '/joint_states@sensor_msgs/msg/JointState[gz.msgs.Model',
             '/imu@sensor_msgs/msg/Imu[gz.msgs.IMU',
+            '/camera/image_raw@sensor_msgs/msg/Image[gz.msgs.Image',
 
         ],
         remappings=[('/model/warehouse_rover/tf', '/tf')],

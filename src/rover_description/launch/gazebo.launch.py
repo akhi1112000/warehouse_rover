@@ -69,7 +69,9 @@ def generate_launch_description():
         rsp,
         gazebo,
         spwan,
-        bridge
+        bridge,
+        rviz,
+        jsp
         
         
     ])

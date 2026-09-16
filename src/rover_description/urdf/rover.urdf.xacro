@@ -288,7 +288,7 @@
 </link>
 
 <joint name="camera_joint" type="fixed">
-  <origin xyz="${body_length/2 + laser_length/2} 0.0 ${body_height/2 + laser_height/2 + camera_height /2}"/>
+  <origin xyz="${laser_length/2 + camera_length/2 } 0.0 ${laser_height/2 + camera_height /2}"/>
   <parent link="laser_link"/>
   <child link="camera_link"/>
 </joint>

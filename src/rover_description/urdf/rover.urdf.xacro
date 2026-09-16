@@ -292,12 +292,5 @@
 </gazebo>
 
 
-<gazebo>
-  <plugin filename="gz-sim-sensors-system"
-          name="gz::sim::systems::Sensors">
-    <render_engine>ogre2</render_engine>
-  </plugin>
-</gazebo>
-
 
 </robot>

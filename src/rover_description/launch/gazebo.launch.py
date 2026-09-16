@@ -56,10 +56,7 @@ def generate_launch_description():
 
     )
 
-    jsp=Node(
-        package='joint_state_publisher_gui',
-        executable='joint_state_publisher_gui',
-    )
+    
 
     rviz=Node(
         package='rviz2',

@@ -100,5 +100,37 @@
   </link>
 </model>
 
+<include>
+  <uri>https://fuel.gazebosim.org/1.0/MovAi/models/shelf</uri>
+  <name>shelf_row_1</name>
+  <pose>0 -4.30 0 0 0 0</pose>
+</include>
+
+<include>
+  <uri>https://fuel.gazebosim.org/1.0/MovAi/models/shelf</uri>
+  <name>shelf_row_2</name>
+  <pose>0 -2.15 0 0 0 0</pose>
+</include>
+
+<include>
+  <uri>https://fuel.gazebosim.org/1.0/MovAi/models/shelf</uri>
+  <name>shelf_row_3</name>
+  <pose>0 0 0 0 0 0</pose>
+</include>
+
+<include>
+  <uri>https://fuel.gazebosim.org/1.0/MovAi/models/shelf</uri>
+  <name>shelf_row_4</name>
+  <pose>0 2.15 0 0 0 0</pose>
+</include>
+
+<include>
+  <uri>https://fuel.gazebosim.org/1.0/MovAi/models/shelf</uri>
+  <name>shelf_row_5</name>
+  <pose>0 4.30 0 0 0 0</pose>
+</include>
+
+
+
   </world>
 </sdf>

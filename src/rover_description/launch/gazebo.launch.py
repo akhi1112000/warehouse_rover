@@ -70,8 +70,8 @@ def generate_launch_description():
         gazebo,
         spwan,
         bridge,
-        rviz,
-        jsp
+        rviz
+        
         
         
     ])

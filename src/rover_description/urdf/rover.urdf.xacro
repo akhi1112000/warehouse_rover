@@ -228,6 +228,15 @@
   </plugin>
 </gazebo>
 
+<gazebo>
+  <plugin filename="gz-sim-joint-state-publisher-system"
+          name="gz::sim::systems::JointStatePublisher">
+    <topic>joint_states</topic>
+    <joint_name>left_wheel_joint</joint_name>
+    <joint_name>right_wheel_joint</joint_name>
+  </plugin>
+</gazebo>
+
 
 
 
@@ -259,6 +268,10 @@
     <update_rate>10</update_rate>
     <always_on>true</always_on>
     <visualize>true</visualize>
+    <odom_topic>odom</odom_topic>
+    <tf_topic>/tf</tf_topic>
+    <frame_id>odom</frame_id>
+    <child_frame_id>base_footprint</child_frame_id>
     <gz_frame_id>laser_link</gz_frame_id>
     <lidar>
       <scan>

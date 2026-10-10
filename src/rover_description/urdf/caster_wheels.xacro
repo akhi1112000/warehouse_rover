@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+        <xacro:macro name="caster_wheel" params="prefix *origin">
+        <link name="${prefix}">
+            <visual>
+            <geometry>
+                <sphere radius="${caster_radius}"/>
+            </geometry>
+            </visual>
+
+            <collision>
+        <geometry>
+            <sphere radius="${caster_radius}"/>
+        </geometry>
+        </collision>
+            <xacro:sphere_inertia mass="${caster_mass}" r="${caster_radius}"/>
+        </link>
+
+        <gazebo reference="${prefix}">
+        <mu1>0.0</mu1>
+        <mu2>0.0</mu2>
+        </gazebo>
+
+        <joint name="${prefix}_joint" type="fixed">
+            <parent link="base_link"/>
+            <child link="${prefix}"/>
+            <xacro:insert_block name="origin"/>
+        </joint>
+        </xacro:macro>
+
+
+
+
+
+
+        <xacro:caster_wheel prefix="caster_front_left">
+        <origin xyz="0.30 0.2 ${caster_radius - (ground_clearance + body_height/2)}"/>
+        </xacro:caster_wheel>
+
+        <xacro:caster_wheel prefix="caster_front_right">
+        <origin xyz="0.30 -0.2 ${caster_radius - (ground_clearance + body_height/2)}"/>
+        </xacro:caster_wheel>
+
+        <xacro:caster_wheel prefix="caster_rear_left">
+        <origin xyz="-0.30 0.2 ${caster_radius - (ground_clearance + body_height/2)}"/>
+        </xacro:caster_wheel>
+
+        <xacro:caster_wheel prefix="caster_rear_right">
+        <origin xyz="-0.30 -0.2 ${caster_radius - (ground_clearance + body_height/2)}"/>
+        </xacro:caster_wheel>
+
+</robot>

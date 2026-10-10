@@ -43,6 +43,8 @@ def generate_launch_description():
         package='ros_gz_sim',
         executable='create',
         arguments=['-topic','robot_description','-name','warehouse_rover',
+               '-x', '-3',
+               '-y', '-3',
                '-z', '0.5'],
         output='screen'
     )
@@ -52,7 +54,7 @@ def generate_launch_description():
     rsp = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
-        parameters=[{'robot_description':ParameterValue(robot_description,value_type=str)}]
+        parameters=[{'robot_description':ParameterValue(robot_description,value_type=str),'use_sim_time': True}]
 
     )
 
@@ -61,15 +63,34 @@ def generate_launch_description():
     rviz=Node(
         package='rviz2',
         executable='rviz2',
-        arguments=['-d',os.path.join(pkg_dir,'rviz','rover.rviz')]
+        arguments=['-d',os.path.join(pkg_dir,'rviz','rover.rviz')],
+        parameters=[{'use_sim_time': True}]
     )
+
+    jsb_spawner=Node(
+        package='controller_manager',
+        executable='spawner',
+        arguments=['joint_state_broadcaster']
+
+    )
+
+    diff_drive_spawner=Node(
+        package='controller_manager',
+        executable='spawner',
+        arguments=['diff_drive_controller']
+    
+        )
+
+
 
     return LaunchDescription([
         rsp,
         gazebo,
         spwan,
         bridge,
-        rviz
+        rviz,
+        jsb_spawner,
+        diff_drive_spawner
         
         
         

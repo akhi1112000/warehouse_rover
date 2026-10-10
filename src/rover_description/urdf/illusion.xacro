@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+
+    <link name="yellow_tabe">
+       <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <box size="${body_length + 0.009} ${body_width + 0.009} 0.03"/>
+                </geometry>
+                <material name="warning_yellow"/>
+       </visual>
+    </link>
+
+    <joint name="base_stripe_joint" type="fixed">
+                <parent link="base_link"/>
+                <child link="yellow_tabe"/>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
+
+
+
+
+</robot>

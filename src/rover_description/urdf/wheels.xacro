@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+
+
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+
+<link name="left_wheel">
+  <visual>
+  <origin rpy="1.57 0 0" xyz="0 0 0"/>
+ 
+      <geometry>
+        <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+      </geometry>
+  
+  </visual>
+
+  <collision>
+  <origin rpy="1.57 0 0" xyz="0 0 0"/>
+  <geometry>
+    <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+  </geometry>
+</collision>
+
+<xacro:cylinder_inertia mass="${wheel_mass}" r="${wheel_radius}" h="${wheel_width}"/>
+
+   
+</link>
+
+<joint name="left_wheel_joint" type="continuous">
+  <parent link="base_link"/>
+  <child link="left_wheel"/>
+  <origin xyz="0 ${wheel_separation/2} ${-(body_height/2)}"/>
+  <axis xyz="0 1 0"/>
+</joint>
+
+
+
+<link name="right_wheel">
+  <visual>
+  <origin rpy="1.57 0 0" xyz="0 0 0"/>
+    
+      <geometry>
+        <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+      </geometry>
+   
+  </visual>
+
+  <collision>
+  <origin rpy="1.57 0 0" xyz="0 0 0"/>
+  <geometry>
+    <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+  </geometry>
+</collision>
+<xacro:cylinder_inertia mass="${wheel_mass}" r="${wheel_radius}" h="${wheel_width}"/>
+
+</link>
+
+
+    <joint name="right_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="right_wheel"/>
+    <origin xyz="0 ${-wheel_separation/2} ${-(body_height/2)}"/>
+    <axis xyz="0 1 0"/>
+    </joint>
+
+
+
+    <gazebo reference="left_wheel">
+        <mu1>1.0</mu1>
+        <mu2>1.0</mu2>
+    </gazebo>
+
+    <gazebo reference="right_wheel">
+        <mu1>1.0</mu1>
+        <mu2>1.0</mu2>
+    </gazebo>
+
+
+</robot>

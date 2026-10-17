@@ -1,58 +1,33 @@
 #include <iostream>
-using namespace std;
+#include <string>
 
-
-class Hardware
+class Base
 {
-    public:
-    virtual void read() = 0;
-    virtual void write() = 0;
-
-
-};
-
-
-class GazeboHardware :public Hardware
-{
-    public:
-    void read() override
-    {
-        cout<<"Gazebo: reading wheel position"<<endl;
-    }
-
-    void write() override
-    {
-        cout<<"Gazebo: sending velocity"<<endl;
-    }
-
-};
-
-
-class RealHardware : public Hardware
-{
-
 public:
-    void read() override
+    virtual void on_init(std::string info)
     {
-        cout<<"Real: reading encoder"<<endl;
+        info_ = info;
+        std::cout << "Base saved: " << info_ << std::endl;
     }
-
-    void write() override
-    {
-        cout<<"Real: sending to motor driver"<<endl;
-    }
+protected:
+    std::string info_;
 };
 
-void run_loop(Hardware& hw)
+class Rover : public Base
 {
-    hw.read();
-    hw.write();
-}
+public:
+
+    void on_init(std::string info) override
+    {
+        Base::on_init(info);
+        std::cout << "Rover on_init" << std::endl;
+        std::cout << "info_ is: [" << info_ << "]" << std::endl;
+    }
+};
 
 int main()
 {
-    GazeboHardware H ;
-    run_loop(H);
-    RealHardware R;
-    run_loop(R);
+    Rover r;
+    Base & b = r;
+    b.on_init("left_wheel_joint");
 }

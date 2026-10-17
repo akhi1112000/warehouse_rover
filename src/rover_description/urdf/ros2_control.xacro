@@ -3,7 +3,7 @@
 
 
     <hardware>
-        <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+        <plugin>rover_hardware/RoverSystem</plugin>
     </hardware>
 
     <joint name="left_wheel_joint" >

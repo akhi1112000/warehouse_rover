@@ -10,6 +10,7 @@ def generate_launch_description():
     xacro_file = os.path.join(pkg_dir,'urdf','rover.urdf.xacro')
     robot_description = Command(['xacro ',xacro_file,' use_gazebo:=false'])
     controllers_yaml = os.path.join(pkg_dir,'config','controllers.yaml')
+    rviz_config = os.path.join(pkg_dir, 'rviz', 'rover.rviz')
 
     rsp=Node(
         package="robot_state_publisher",
@@ -29,9 +30,32 @@ def generate_launch_description():
         output='screen'
 
     )
-    print(xacro_file)
 
+    jsp_spawner = Node(
+        package='controller_manager',
+        executable='spawner',
+        arguments=['joint_state_broadcaster'],
+        output='screen'
+    )
+
+    diff_drive_spawner=Node(
+        package='controller_manager',
+        executable='spawner',
+        arguments=['diff_drive_controller'],
+        output='screen'
+    )
+
+    rviz = Node(
+        package='rviz2',
+        executable='rviz2',
+        arguments=['-d', rviz_config],
+        parameters=[{'use_sim_time': False}],
+        output='screen'
+    )
     return LaunchDescription([
         rsp,
-        controller_manager
+        controller_manager,
+        jsp_spawner,
+        diff_drive_spawner,
+        rviz
     ])

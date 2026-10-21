@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="warehouse_rover">
 
+<xacro:arg name="use_gazebo" default="true"/>
+
+
 <xacro:include filename="$(find rover_description)/urdf/properties.xacro"/>
 <xacro:include filename="$(find rover_description)/urdf/inertia_macros.xacro"/>
 <xacro:include filename="$(find rover_description)/urdf/base.xacro"/>
@@ -9,6 +12,9 @@
 <xacro:include filename="$(find rover_description)/urdf/caster_wheels.xacro"/>
 <xacro:include filename="$(find rover_description)/urdf/gazebo_links.xacro"/>
 <xacro:include filename="$(find rover_description)/urdf/gazebo_plugins.xacro"/>
+
+
+
 
 
 </robot>

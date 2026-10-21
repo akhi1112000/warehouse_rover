@@ -1,9 +1,19 @@
-<robot>   
-<ros2_control name="GazeboSystem" type="system" >
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<ros2_control name="RoverSystem" type="system" >
 
 
     <hardware>
-        <plugin>rover_hardware/RoverSystem</plugin>
+
+        <xacro:if value="$(arg use_gazebo)">
+            <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+        </xacro:if>
+
+        <xacro:unless value="$(arg use_gazebo)">
+            <plugin>rover_hardware/RoverSystem</plugin>
+        </xacro:unless>
+
     </hardware>
 
     <joint name="left_wheel_joint" >

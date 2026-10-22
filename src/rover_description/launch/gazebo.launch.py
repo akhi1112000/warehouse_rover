@@ -22,7 +22,7 @@ def generate_launch_description():
 
     sdf_file= os.path.join(pkg_dir,'worlds','warehouse.sdf')
 
-    robot_description  =Command(['xacro ',xacro_file,' use_gazebo:=false'])
+    robot_description  =Command(['xacro ',xacro_file,' use_gazebo:=true'])
 
     ros_gz_sim=get_package_share_directory('ros_gz_sim')
 

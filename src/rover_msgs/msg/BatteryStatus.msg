@@ -1,4 +1,0 @@
-float64 charge_percent
-float32 voltage
-bool is_charging
-int32 time_remaining_min

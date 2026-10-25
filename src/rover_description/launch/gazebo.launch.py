@@ -63,7 +63,7 @@ def generate_launch_description():
     rviz=Node(
         package='rviz2',
         executable='rviz2',
-        arguments=['-d',os.path.join(pkg_dir,'rviz','rover.rviz')],
+        arguments=['-d',os.path.join(pkg_dir,'rviz','nav2.rviz')],
         parameters=[{'use_sim_time': True}]
     )
 

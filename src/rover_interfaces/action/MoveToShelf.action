@@ -1,0 +1,6 @@
+string shelf_name
+---
+bool state_result
+bool is_shelf
+---
+float32 rem_dist

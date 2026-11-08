@@ -62,6 +62,14 @@ std::shared_ptr<const Move_ToShelf::Goal>&goal)
 
     int shelf_num = 5;
 
+
+   
+    if(goal->shelf_name == "home" || goal->shelf_name == "loading" )
+    {
+      RCLCPP_INFO(this->get_logger(),"THE GOAL '%s' IS FOUND",goal->shelf_name.c_str());
+      return rclcpp_action::GoalResponse::ACCEPT_AND_EXECUTE;
+    }
+
     for (int i = 1; i <= shelf_num; i++)
     {
         std::string shelf= "RACK_" + std::to_string(i);
@@ -94,13 +102,33 @@ rclcpp_action::CancelResponse now_it_is_cancelled (const std::shared_ptr<Goal_Ha
    void execute(const std::shared_ptr<Goal_Handle> &goal_handle)
    {
       auto goal = goal_handle->get_goal();
-
-
       auto result = std::make_shared<Move_ToShelf::Result>();
-      double x = 2.55;
+
+      double x;
+      double y;
+      if(goal->shelf_name == "home")
+      {
+         x = 0;
+         y = 0;
+      }
+
+      else if (goal->shelf_name == "loading")
+      {
+         x = -5.8;
+         y = 4.3;
+      }
+
+      else
+      {
+         x = 2.55;
       double i  = std::stoi(goal->shelf_name.substr(5));
 
-      double y = -1.30 + (i  - 1) * 2.15 - 1.075;
+       y = -1.30 + (i  - 1) * 2.15 - 1.075;
+
+      }
+      
+
+      
 
       nav_2::Goal nav2_goal;
       nav2_goal.pose.header.frame_id = "map";

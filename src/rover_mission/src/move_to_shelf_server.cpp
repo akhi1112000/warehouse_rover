@@ -40,11 +40,11 @@ class MoveToShelfServer :public rclcpp::Node
 
          if(nav2_client_->wait_for_action_server(std::chrono::seconds(5)))
          {
-            RCLCPP_INFO(this->get_logger(), "IS FOUND !");
+            RCLCPP_INFO(this->get_logger(), "THE CLIENT Nav2 server is found!");
          }
          else
          {
-            RCLCPP_ERROR(this->get_logger(), "IS NOT FOUND !");
+            RCLCPP_ERROR(this->get_logger(), "THE CLIENT NAV2 IS NOT FOUND YET !");
          }
 
    }

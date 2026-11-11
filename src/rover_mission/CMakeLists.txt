@@ -16,8 +16,11 @@ find_package(rover_interfaces REQUIRED)
 add_executable(rover_action src/move_to_shelf_server.cpp)
 ament_target_dependencies(rover_action rclcpp rclcpp_action nav2_msgs geometry_msgs rover_interfaces)
 
+add_executable(rover_client src/rover_action_client.cpp)
+ament_target_dependencies(rover_client rclcpp rclcpp_action nav2_msgs geometry_msgs rover_interfaces)
 
-install(TARGETS rover_action
+
+install(TARGETS rover_action rover_client
 
   DESTINATION lib/${PROJECT_NAME}
 )

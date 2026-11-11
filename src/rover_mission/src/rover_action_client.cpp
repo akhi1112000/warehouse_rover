@@ -68,27 +68,29 @@ class rover_client : public rclcpp::Node
     void run_mision()
     {
 
-        if(go_to("rack_3")==false)
+        if(go_to_try("rack_2")==false)
         {
           RCLCPP_ERROR(this->get_logger(), "THE ROBOT DID NOT ARRIVE !");
+          go_to("home");
           return;
         }
 
 
-       RCLCPP_INFO(this->get_logger(),"THE ROVER IS LOADING");
+       
 
-        if(go_to("loading")==false)
+        if(go_to_try("loading")==false)
         {
           RCLCPP_ERROR(this->get_logger(), "THE ROBOT DID NOT ARRIVE !");
+          go_to("home");
           return;
         }
 
         
-
+        RCLCPP_INFO(this->get_logger(),"THE ROVER IS UNLOADING");
         std::this_thread::sleep_for(std::chrono::seconds(3));
 
 
-        if(go_to("home")==false)
+        if(go_to_try("home")==false)
         {
           RCLCPP_ERROR(this->get_logger(), "THE ROBOT DID NOT ARRIVE HOME!");
           return;
@@ -99,6 +101,19 @@ class rover_client : public rclcpp::Node
 
         
       
+    }
+
+    bool go_to_try(const std::string &goal)
+    {
+        if(go_to(goal) == true)
+        {
+            return true;
+        }
+        RCLCPP_WARN(this->get_logger(), "THE ROVER TRYING to get '%s'!",goal.c_str());
+
+        return go_to(goal);
+
+
     }
    
    

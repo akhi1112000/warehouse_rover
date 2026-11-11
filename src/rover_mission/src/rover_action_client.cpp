@@ -34,10 +34,10 @@ class rover_client : public rclcpp::Node
 
     private:
 
-    void send_goal()
+    bool go_to(const std::string & goal_to_go)
     {
         Move_ToShelf::Goal goal;
-        goal.shelf_name = "rack_1";
+        goal.shelf_name = goal_to_go;
 
         auto goal_sender = rover_client_->async_send_goal(goal);
         auto get_goal = goal_sender.get();
@@ -45,7 +45,7 @@ class rover_client : public rclcpp::Node
         if(!get_goal)
         {
             RCLCPP_ERROR(this->get_logger(),"THE GOAL IS NOT ACCEPTED");
-            return;
+            return false;
         }
        
         RCLCPP_INFO(this->get_logger(),"THE GOAL IS ACCEPTED");
@@ -56,15 +56,19 @@ class rover_client : public rclcpp::Node
         if(get_goal_result.code == rclcpp_action::ResultCode::SUCCEEDED)
         {
         RCLCPP_INFO(this->get_logger(), "THE ROBOT ARRIVED !");
+        return true;
         }
         else
         {
             RCLCPP_ERROR(this->get_logger(), "THE ROBOT DID NOT ARRIVE !");
+            return false;
         }
     }
+   
+   
     void parallel()
     {
-        std::thread([this](){send_goal();}).detach();
+        std::thread([this](){go_to("rack_3");}).detach();
     }
 
 

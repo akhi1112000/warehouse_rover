@@ -64,11 +64,47 @@ class rover_client : public rclcpp::Node
             return false;
         }
     }
+
+    void run_mision()
+    {
+
+        if(go_to("rack_3")==false)
+        {
+          RCLCPP_ERROR(this->get_logger(), "THE ROBOT DID NOT ARRIVE !");
+          return;
+        }
+
+
+       RCLCPP_INFO(this->get_logger(),"THE ROVER IS LOADING");
+
+        if(go_to("loading")==false)
+        {
+          RCLCPP_ERROR(this->get_logger(), "THE ROBOT DID NOT ARRIVE !");
+          return;
+        }
+
+        
+
+        std::this_thread::sleep_for(std::chrono::seconds(3));
+
+
+        if(go_to("home")==false)
+        {
+          RCLCPP_ERROR(this->get_logger(), "THE ROBOT DID NOT ARRIVE HOME!");
+          return;
+        }
+
+
+        RCLCPP_INFO(this->get_logger(), "THE ROBOT ARRIVED HOME !");
+
+        
+      
+    }
    
    
     void parallel()
     {
-        std::thread([this](){go_to("rack_3");}).detach();
+        std::thread([this](){run_mision();}).detach();
     }
 
 

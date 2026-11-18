@@ -54,7 +54,7 @@ def generate_launch_description():
     rsp = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
-        parameters=[{'robot_description':ParameterValue(robot_description,value_type=str),'use_sim_time': False}]
+        parameters=[{'robot_description':ParameterValue(robot_description,value_type=str),'use_sim_time': True}]
 
     )
 

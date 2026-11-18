@@ -11,8 +11,8 @@
 
 
 using Move_ToShelf = rover_interfaces::action::MoveToShelf;
-using Goal_Handle = rclcpp_action::ServerGoalHandle<Move_ToShelf>;
-using nav_2       = nav2_msgs::action::NavigateToPose;  
+using Goal_Handle  = rclcpp_action::ServerGoalHandle<Move_ToShelf>;
+using nav_2        = nav2_msgs::action::NavigateToPose;  
 
 
 
@@ -54,6 +54,17 @@ class MoveToShelfServer :public rclcpp::Node
 
    private:
   
+std::string tolower(std::string word)
+{
+    for (size_t i = 0; i < word.size(); i++)
+    {
+       word[i] = std::tolower(word[i]);
+
+    }
+    return word;
+}
+
+
 
    rclcpp_action::GoalResponse still_need_torespond(const rclcpp_action::GoalUUID &UUID,
 std::shared_ptr<const Move_ToShelf::Goal>&goal)
@@ -62,11 +73,11 @@ std::shared_ptr<const Move_ToShelf::Goal>&goal)
 
     int shelf_num = 5;
 
-
+   std::string goal_from_client =  tolower(goal->shelf_name);
    
-    if(goal->shelf_name == "home" || goal->shelf_name == "loading" )
+    if(goal_from_client == "home" || goal_from_client == "loading" )
     {
-      RCLCPP_INFO(this->get_logger(),"THE GOAL '%s' IS FOUND",goal->shelf_name.c_str());
+      RCLCPP_INFO(this->get_logger(),"THE GOAL '%s' IS FOUND",goal_from_client.c_str());
       return rclcpp_action::GoalResponse::ACCEPT_AND_EXECUTE;
     }
 
@@ -74,15 +85,15 @@ std::shared_ptr<const Move_ToShelf::Goal>&goal)
     {
         std::string shelf= "RACK_" + std::to_string(i);
         std::transform(shelf.begin() ,shelf.end(), shelf.begin() ,::tolower);
-        if(goal->shelf_name ==shelf )
+        if(goal_from_client ==shelf )
         {
-            RCLCPP_INFO(this->get_logger(),"THE GOAL '%s' IS FOUND",goal->shelf_name.c_str());
+            RCLCPP_INFO(this->get_logger(),"THE GOAL '%s' IS FOUND",goal_from_client.c_str());
             return rclcpp_action::GoalResponse::ACCEPT_AND_EXECUTE;
         }
        
     }
 
-     RCLCPP_ERROR(this->get_logger(),"THE GOAL '%s' IS NOT FOUND",goal->shelf_name.c_str());
+     RCLCPP_ERROR(this->get_logger(),"THE GOAL '%s' IS NOT FOUND",goal_from_client.c_str());
     return rclcpp_action::GoalResponse::REJECT;
    }
 

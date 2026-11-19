@@ -113,17 +113,20 @@ rclcpp_action::CancelResponse now_it_is_cancelled (const std::shared_ptr<Goal_Ha
    void execute(const std::shared_ptr<Goal_Handle> &goal_handle)
    {
       auto goal = goal_handle->get_goal();
+
+      std::string goal_from_client = tolower(goal->shelf_name);
+
       auto result = std::make_shared<Move_ToShelf::Result>();
 
       double x;
       double y;
-      if(goal->shelf_name == "home")
+      if(goal_from_client == "home")
       {
          x = 0;
          y = 0;
       }
 
-      else if (goal->shelf_name == "loading")
+      else if (goal_from_client == "loading")
       {
          x = -5.8;
          y = 4.3;
@@ -131,10 +134,8 @@ rclcpp_action::CancelResponse now_it_is_cancelled (const std::shared_ptr<Goal_Ha
 
       else
       {
-         x = 2.55;
-      double i  = std::stoi(goal->shelf_name.substr(5));
-
-       y = -1.30 + (i  - 1) * 2.15 - 1.075;
+        x = SHELF_X;
+        y = shelf_y(goal_from_client);
 
       }
       
